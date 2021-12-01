@@ -1,8 +1,14 @@
+import 'package:credpal_test/ui/constants/constants.dart';
+import 'package:credpal_test/ui/views/popup_card.dart';
 import 'package:credpal_test/ui/widgets/custom_column_widget.dart';
 import 'package:credpal_test/ui/widgets/custom_container.dart';
+import 'package:credpal_test/ui/widgets/custom_rect_tween.dart';
+import 'package:credpal_test/ui/widgets/hero_dialog_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -27,6 +33,8 @@ class HomeView extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 20.r,
+                      backgroundColor: Colors.white,
+                      backgroundImage: const AssetImage("assets/images/photo.png"),
                     ),
                     SizedBox(
                       width: 10.w,
@@ -39,17 +47,32 @@ class HomeView extends StatelessWidget {
                     const Expanded(
                       child: SizedBox(),
                     ),
-                    Container(
-                      height: 40.h,
-                      width: 40.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.r),
-                        color: Colors.deepOrange,
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.local_fire_department_sharp,
-                          color: Colors.white,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                          return const PopupCard();
+                        }));
+                      },
+                      child: Hero(
+                        tag: heroAddTodo,
+                        createRectTween: (begin, end) {
+                          return CustomRectTween(begin: begin!, end: end!);
+                        },
+                        child: Material(
+                          child: Container(
+                            height: 40.h,
+                            width: 40.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(13.r),
+                              color: Colors.deepOrange,
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.local_fire_department_sharp,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -293,7 +316,7 @@ class HomeView extends StatelessWidget {
                     ),
                     SizedBox(width: 15.w,),
                     CustomContainer(
-                      child: const Icon(Icons.arrow_forward_ios, color: Colors.black,),
+                      child: const Icon(Icons.arrow_forward_ios, color: Colors.black, size: 18,),
                       color: Colors.grey.withOpacity(.2),
                     ),
                   ],
@@ -305,16 +328,4 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-
-  Container buildShortLines(double height, double width, Color color) {
-    return Container(
-                height: height,
-                width: width,
-                color: color,
-              );
-  }
 }
-
-
-
-
